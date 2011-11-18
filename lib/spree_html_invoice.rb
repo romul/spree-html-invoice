@@ -6,19 +6,13 @@ module HtmlInvoice
 
     def self.activate
       Dir.glob(File.join(File.dirname(__FILE__), "../app/**/*.rb")) do |c|
-        Rails.env.production? ? require(c) : load(c)
+        Rails.application.config.cache_classes ? require(c) : load(c)
+      end
+      Dir.glob(File.join(File.dirname(__FILE__), "../app/overrides/**/*.rb")) do |c|
+        Rails.application.config.cache_classes ? require(c) : load(c)
       end
     end
 
     config.to_prepare &method(:activate).to_proc
   end
-end
-
-class HtmlInvoiceHooks < Spree::ThemeSupport::HookListener
-
-
-  insert_after :admin_order_show_buttons , 'html_buttons'
-
-  insert_after :admin_order_edit_buttons , 'html_buttons'
-
 end
