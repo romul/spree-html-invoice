@@ -4,7 +4,7 @@
   </figure>
 <%- end %>
 
-<div class="shop"><%= Spree::Config[:site_name] %></div>
+<div class="shop"><%= current_store.name %></div>
 <%- if Spree::HtmlInvoice::Config[:html_receipt_info] %>
   <div class="info"><%= Spree::HtmlInvoice::Config[:html_receipt_info].html_safe %></div>
 <%- end %>
